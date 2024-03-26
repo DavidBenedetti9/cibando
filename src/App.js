@@ -1,16 +1,39 @@
 import "./App.scss";
+import HomeIcon from "@mui/icons-material/Home";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import MarkAsUnreadIcon from "@mui/icons-material/MarkAsUnread";
+
+import { useState } from "react";
+
+import Logo from "./assets/images/icona-cibando.png";
 
 function App() {
+  const [pippo, setPippo] = useState("ciao");
+  const [interruttore, setInterrurrore] = useState(false);
+
+  function cambiaValore() {
+    setPippo(pippo === "ciao" ? "buongiorno" : "ciao");
+
+    //pippo === 'ciao' ? setPippo('buongiorno') : setPippo('ciao');
+
+    // if (pippo !== 'ciao') {
+    //   setPippo('ciao')
+    // } else {
+    //   setPippo('buongiorno');
+    // }
+  }
+
   return (
     <>
       <header>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-          <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+        <nav className="navbar navbar-expand-lg bg-red navbar-dark">
+          <div className="container-fluid">
+            <img src={Logo} className="icona_cibando" />
+            <a className="navbar-brand" href="#">
               Cibando
             </a>
             <button
-              class="navbar-toggler"
+              className="navbar-toggler"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarNav"
@@ -18,23 +41,23 @@ function App() {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span class="navbar-toggler-icon"></span>
+              <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">
-                    Home
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <a className="nav-link active" aria-current="page" href="#">
+                    <HomeIcon>Filled</HomeIcon>Home
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    Ricette
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <MenuBookIcon>Filled</MenuBookIcon>Ricette
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    Contatti
+                <li className="nav-item">
+                  <a className="nav-link" href="#">
+                    <MarkAsUnreadIcon>Filled</MarkAsUnreadIcon>Contatti
                   </a>
                 </li>
               </ul>
@@ -42,9 +65,33 @@ function App() {
           </div>
         </nav>
       </header>
-      <div class="container-titolo">
+      <div className="container-titolo">
         <h2>App di esempio</h2>
-        <p class="paragrafo">Ecco il testo iniziale</p>
+        <p className="paragrafo">Ecco il testo iniziale</p>
+        {/* un log per stamparmi la variabile pippo che ho dichiarato sopra*/}
+        {/* interpolazione dei dati */}
+        <h3>{pippo}</h3>
+        <button className="btn btn-primary" onClick={cambiaValore}>
+          Cambia Valore
+        </button>
+        <div>
+          {interruttore ? (
+            <div>
+              <h2>Luce accesa</h2>
+            </div>
+          ) : (
+            <div>
+              <h2>Luce spenta</h2>
+            </div>
+          )}
+          <button
+            style={{ backgroundColor: interruttore ? "red" : "green" }}
+            className="btn btn-primary"
+            onClick={() => setInterrurrore(!interruttore)}
+          >
+            {interruttore ? "spegni" : "accendi"}
+          </button>
+        </div>
       </div>
     </>
   );
