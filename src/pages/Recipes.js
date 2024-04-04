@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
+
+//service
 import RecipesApi from "../api/recipeApi";
+
+//components
+import RecipeCard from "../components/RecipeCard";
+import styled from "styled-components";
 
 const Recipes = () => {
   const [ricette, setRicette] = useState([]);
@@ -35,7 +41,20 @@ const Recipes = () => {
     }
   }, [ricette]);
 
-  return <div>Ricette</div>;
+  return (
+    <Contenitore>
+      <h2 className="title">Le nostre ricette</h2>
+      <RecipeCard ricette={ricette}></RecipeCard>
+    </Contenitore>
+  );
 };
+
+const Contenitore = styled.div`
+  background-color: white;
+
+  .title {
+    padding: 5px 15px;
+  }
+`;
 
 export default Recipes;
