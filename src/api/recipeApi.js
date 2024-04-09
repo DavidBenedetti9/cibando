@@ -12,9 +12,19 @@ async function getRecipes() {
   }
 }
 
+async function getRecipeById(id) {
+  try {
+    const response = await RECIPES.find((res) => res._id === id);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 //oggetto che mi conterrà i metodi da esportare
 const RecipesApi = {
-    getRecipes: getRecipes
-}
+  getRecipes: getRecipes,
+  getRecipeById: getRecipeById,
+};
 
 export default RecipesApi;

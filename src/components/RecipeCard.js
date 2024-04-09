@@ -1,5 +1,8 @@
 import React from "react";
+
 import styled from "styled-components";
+
+import { Link } from "react-router-dom";
 
 const RecipeCard = (props) => {
   return (
@@ -14,7 +17,15 @@ const RecipeCard = (props) => {
             <div className="card-body">
               <h5 className="card-title">{ricetta.title}</h5>
               <p className="card-text">{ricetta.description}</p>
-              <button className="btn btn-primary">VISUALIZZA</button>
+              <Link to={`/dettaglio/${ricetta.title}/${ricetta._id}`}>
+                <button className="btn btn-primary">VISUALIZZA</button>
+              </Link>
+
+              {/* <button className="btn btn-primary">
+                <Link to={"/dettaglio/" + ricetta._id}>
+                  VISUALIZZA
+                </Link>
+              </button> */}
             </div>
           </div>
         </div>
@@ -54,6 +65,7 @@ const Contenitore = styled.div`
         font-size: 20px;
         color: black;
         text-align: justify;
+        margin-bottom: 10px;
       }
     }
   }
