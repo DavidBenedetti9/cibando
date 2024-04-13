@@ -5,7 +5,7 @@ const RECIPES = [
       title: 'Cannelloni',
       description: 'I cannelloni sono un piatto tradizionale della cucina italiana che conquista i palati con la sua combinazione di pasta, ripieno saporito e salsa al formaggio. Preparare i cannelloni in casa può sembrare una sfida, ma con questa guida passo-passo sarai in grado di creare un pasto delizioso che stupirà i tuoi ospiti. Segui le istruzioni qui di seguito e preparati a gustare i cannelloni fatti da te!',
       image: 'https://www.cucchiaio.it/content/cucchiaio/it/ricette/2020/04/cannelloni-di-carne/_jcr_content/header-par/image-single.img.jpg/1587399398091.jpg',
-      difficulty: 2,
+      difficulty: 1,
       date: '10/05/2022',
       published: true
     },
@@ -32,7 +32,7 @@ const RECIPES = [
       title: 'Insalata',
       description: "L’insalata croccante, per la presenza di crostini di pane e riccioli di parmigiano, si può definire un ricco contorno ma anche un leggero piatto unico: una fresca e appetitosa insalata che sarà molto gradita nelle calde giornate d’estate. L’insalata croccante non è solo un’ottima pietanza da preparare e consumare durante l’estate, ma è anche ideale da portare con se in ufficio al posto del solito panino: ricordatevi in questo caso, di condirla e unire i crostini di pane poco prima di consumarla.",
       image: 'https://blog.giallozafferano.it/azuccherozero/wp-content/uploads/2018/12/Insalata-verde-con-sesamo-tostato-o-960x721.jpeg',
-      difficulty: 1,
+      difficulty: 4,
       date: '20/06/2022',
       published: true
     },
@@ -41,7 +41,7 @@ const RECIPES = [
       title: 'Pizza Margherita',
       description: 'Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores. At solmen va esser necessi far uniform grammatica, pronunciation e plu sommun paroles. Ma quande lingues coalesce, li grammatica del resultant lingue es plu simplic e regulari quam ti del coalescent lingues. Li nov lingua franca va esser plu simplic e regulari quam li existent Europan lingues. It va esser tam simplic quam Occidental in fact, it va esser Occidental. A un Angleso it va semblar un simplificat Angles, quam un skeptic Cambridge amico dit me que Occidental es.Li Europan lingues es membres del sam familie. Lor separat existentie es un myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solme',
       image: 'https://primochef.it/wp-content/uploads/2019/08/SH_pizza_fatta_in_casa-1200x800.jpg',
-      difficulty: 4,
+      difficulty: 5,
       date: '20/07/2022',
       published: true
     },

@@ -7,19 +7,30 @@ import RecipesApi from "../api/recipeApi";
 import RecipeCard from "../components/RecipeCard";
 import styled from "styled-components";
 
-const Recipes = () => {
+const Recipes = (props) => {
   const [ricette, setRicette] = useState([]);
+  const [titolo, setTitolo] = useState("");
 
   async function getAllRecipes() {
     try {
       const response = await RecipesApi.getRecipes();
       if (response) {
-        setRicette(response);
+        setRicette(response.sort((a, b) => b._id - a._id));
       } else {
         setRicette([]);
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  function titoloDalFiglio(data) {
+    console.log("titolo", data);
+    console.log(titolo);
+    if (titolo === data) {
+      setTitolo(null);
+    } else {
+      setTitolo(data);
     }
   }
 
@@ -43,8 +54,15 @@ const Recipes = () => {
 
   return (
     <Contenitore>
-      <h2 className="title">Le nostre ricette</h2>
-      <RecipeCard ricette={ricette}></RecipeCard>
+      <div className="altezza-titolo">
+        <h2 className="title">Le nostre ricette</h2>
+        {titolo && <h3 className="titolo-mod"> Titolo ricevuto: {titolo}</h3>}
+      </div>
+      <RecipeCard
+        ricette={ricette}
+        onTitoloRicevuto={titoloDalFiglio}
+        pag="ricette"
+      ></RecipeCard>
     </Contenitore>
   );
 };
@@ -54,6 +72,14 @@ const Contenitore = styled.div`
 
   .title {
     padding: 5px 15px;
+  }
+  .altezza-titolo {
+    height: 110px;
+  }
+  .titolo-mod {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 

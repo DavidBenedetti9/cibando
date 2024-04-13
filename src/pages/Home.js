@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
 import CarouselSlider from "../components/CarouselSlider";
 import Recipes from "../pages/Recipes";
+import RecipesApi from "../api/recipeApi";
+import RecipeCard from "../components/RecipeCard";
 
 const Home = () => {
   const [evidenziazione, setEvidenziazione] = useState(false);
+  const [ricette, setRicette] = useState([]);
   const bgDinamico = {
     backgroundColor: evidenziazione ? "yellow" : "white",
     fontSize: "50px",
@@ -14,14 +17,35 @@ const Home = () => {
     textAlign: "left",
   };
 
+  async function prendiRicette() {
+    try {
+      const response = await RecipesApi.getRecipes();
+      if (response) {
+        setRicette(response.sort((a, b) => b._id - a._id).slice(0, 4));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const onEvidenziazione = () => {
     setEvidenziazione(!evidenziazione);
   };
 
+  //  useEffect all'avvio del componente
+  useEffect(() => {
+    console.log("sei entrato nel componente");
+    prendiRicette();
+
+    return () => {
+      console.log("sei uscito dal componente");
+      setRicette([]);
+    };
+  }, []);
+
   return (
     <Contenitore>
       <CarouselSlider></CarouselSlider>
-
       <div className="container-titolo">
         <h2 style={bgDinamico} onClick={onEvidenziazione}>
           Benvenuti in Cibando
@@ -47,7 +71,8 @@ const Home = () => {
           rivolse allora verso la finestra, e il cielo fosco{" "}
         </p>
       </div>
-      <Recipes></Recipes>
+      <h2 style={{marginLeft: '20px'}}>Ecco le nostre ultime ricette:</h2>
+      <RecipeCard ricette={ricette} pag="home" />{" "}
     </Contenitore>
   );
 };
@@ -63,6 +88,8 @@ const Contenitore = styled.div`
     width: 95%;
     margin: auto;
     text-align: justify;
+    padding-bottom: 10px;
+    font-size: large;
   }
 `;
 
