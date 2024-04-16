@@ -8,6 +8,8 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import DetailRecipe from "./pages/DetailRecipe";
+import RegistrationUser from "./pages/RegistrationUser";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -18,7 +20,9 @@ function App() {
         <Route path="/home" element={<Home />}></Route>
         <Route path="/ricette" element={<Recipes />}></Route>
         <Route path="/dettaglio/:title/:id" element={<DetailRecipe />}></Route>
+        <Route path="/registrazione" element={<RegistrationUser />}></Route>
       </Routes>
+      <Footer></Footer>
     </Router>
   );
 }
