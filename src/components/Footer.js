@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <Contenitore>
-      <div class="footer">
+      <div className="footer">
         <Link to="/" className="navbar-brand">
           <img src={Logo} className="icona_cibando" alt="Cibando" />
         </Link>

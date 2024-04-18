@@ -1,6 +1,9 @@
-import { event } from "jquery";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import styled from "styled-components";
+
+import { Input } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const RegistrationUser = () => {
   const foto =
@@ -15,13 +18,20 @@ const RegistrationUser = () => {
   });
 
   const [formErrors, setFormErrors] = useState({});
+  const [formValido, setFormValido] = useState(false);
 
   const handleOnChange = (evento) => {
     //ci andiamo a copiare tutto il contenuto dentro al formValues
     //quando all'onChange chiamiamo il metodo richiamiamo noi stessi
     //è come se diventasse name: 'David'
     /// ... si chiamano spreadArray
-    setFormValues({ ...formValues, [evento.target.name]: evento.target.value });
+    setFormValues({
+      ...formValues,
+      [evento.target.name]:
+        evento.target.type !== "checkbox"
+          ? evento.target.value.trim()
+          : evento.target.checked,
+    });
   };
 
   const validazioneCampi = (evento) => {
@@ -49,12 +59,47 @@ const RegistrationUser = () => {
             [name]: undefined,
           }));
         }
+      } else if (name === "password") {
+        const passwordRegex =
+          /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[^\w\d\s:])([^\s]){8,16}$/;
+
+        if (!passwordRegex.test(value)) {
+          setFormErrors((prevError) => ({
+            ...prevError,
+            [name]:
+              "Il campo password deve contenere un numero, una minuscola, una maiuscola ed un carattere speciale",
+          }));
+        } else {
+          setFormErrors((prevError) => ({
+            ...prevError,
+            [name]: undefined,
+          }));
+        }
       } else {
         setFormErrors((prevError) => ({
           ...prevError,
           [name]: undefined,
         }));
       }
+    }
+  };
+
+  const convalidaPassword = () => {
+    const password = formValues.password;
+    const ripetiPassword = formValues.ripetiPassword;
+
+    if (password !== ripetiPassword) {
+      setFormErrors((prevError) => ({
+        ...prevError,
+        ripetiPassword: "Le password non corrispondono",
+      }));
+      return false;
+    } else {
+      setFormErrors((prevError) => ({
+        ...prevError,
+        ripetiPassword: undefined,
+      }));
+      return true;
     }
   };
 
@@ -66,6 +111,29 @@ const RegistrationUser = () => {
     console.log("Campi del form: ", formValues);
   }
 
+  useEffect(() => {
+    //Object.values(formErrors) serve per estrarci i valori dal form error
+    //(error) => !error) questo si trasforma negli errori
+    //every mi ritorna un boolean
+    const isFormValid = Object.values(formErrors).every((error) => !error);
+    const campiCompilati = Object.values(formValues).every(
+      (value) =>
+        value !== undefined &&
+        value !== null &&
+        value !== "" &&
+        value !== false &&
+        value !== "false"
+    );
+    // if (isFormValid && campiCompilati) {
+    //   setFormValido(true);
+    // }
+
+    setFormValido(isFormValid && campiCompilati);
+  }, [formValues, formErrors]);
+
+  useEffect(() => {
+    convalidaPassword();
+  }, [formValues.ripetiPassword, formValues.password]);
   return (
     <Contenitore>
       <section className="mb-4">
@@ -143,16 +211,18 @@ const RegistrationUser = () => {
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <input
+                            <Input.Password
+                              size="large"
                               type="password"
                               id="password"
-                              className={`form-control ${
+                              className={`${
                                 formErrors.password ? "is-invalid" : ""
                               }`}
                               name="password"
                               value={formValues.password}
                               onChange={handleOnChange}
                               onBlur={validazioneCampi}
+                              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             />
                             <label className="form-label" htmlFor="password">
                               Password
@@ -171,16 +241,17 @@ const RegistrationUser = () => {
                             data-mdb-input-init
                             className="form-outline flex-fill mb-0"
                           >
-                            <input
+                            <Input.Password
                               type="password"
                               id="ripetiPassword"
-                              className={`form-control ${
+                              className={` ${
                                 formErrors.ripetiPassword ? "is-invalid" : ""
                               }`}
                               name="ripetiPassword"
                               value={formValues.ripetiPassword}
                               onChange={handleOnChange}
                               onBlur={validazioneCampi}
+                              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                             />
                             <label
                               className="form-label"
@@ -224,7 +295,7 @@ const RegistrationUser = () => {
                             data-mdb-button-init
                             data-mdb-ripple-init
                             className="btn btn-primary btn-lg"
-                            disabled={!formValues}
+                            disabled={!formValido}
                           >
                             Registrati
                           </button>
@@ -251,7 +322,6 @@ const RegistrationUser = () => {
 
 const Contenitore = styled.div`
   section {
-    
     .card-body {
       padding: 0;
     }
